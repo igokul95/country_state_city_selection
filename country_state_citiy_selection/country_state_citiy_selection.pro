@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         country.cpp \
         main.cpp \
-        state.cpp
+        state.cpp \
+        statemodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,4 +34,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     country.h \
-    state.h
+    state.h \
+    statemodel.h
