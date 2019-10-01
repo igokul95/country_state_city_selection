@@ -21,12 +21,12 @@ QVariant StateModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || !mStates)
         return QVariant();
-    const StateItem state = mStates->items().at(index.row());
+    const StateItem *state = mStates->items().at(index.row());
     switch (role) {
     case StateNameRole:
-        return QVariant(state.name);
+        return QVariant(state->name);
      case StateTotalSizeRole:
-        return QVariant(state.area);
+        return QVariant(state->area);
     }
 
     return QVariant();
@@ -36,14 +36,14 @@ bool StateModel::setData(const QModelIndex &index, const QVariant &value, int ro
 {
     if (!mStates)
         return false;
-    StateItem state = mStates->items().at(index.row());
+    StateItem *state = mStates->items().at(index.row());
 
     switch (role) {
     case StateNameRole:
-        state.name = value.toString();
+        state->name = value.toString();
         break;
      case StateTotalSizeRole:
-        state.area = value.toInt();
+        state->area = value.toInt();
         break;
     }
 
@@ -85,21 +85,21 @@ void StateModel::setstates(States *states)
 
         mStates = states;
 
-        if (mStates) {
-            connect(mStates, &States::preStateAppended, this, [=]() {
-                const int index = mStates->items().size();
-                beginInsertRows(QModelIndex(), index, index);
-            });
-            connect(mStates, &States::postStateAppended, this, [=]() {
-                endInsertRows();
-            });
-            connect(mStates, &States::preStateRemoved, this, [=](int index) {
-                beginRemoveRows(QModelIndex(), index, index);
-            });
-            connect(mStates, &States::postStateRemoved, this, [=]() {
-                endRemoveRows();
-            });
-        }
+//        if (mStates) {
+//            connect(mStates, &States::preStateAppended, this, [=]() {
+//                const int index = mStates->items().size();
+//                beginInsertRows(QModelIndex(), index, index);
+//            });
+//            connect(mStates, &States::postStateAppended, this, [=]() {
+//                endInsertRows();
+//            });
+//            connect(mStates, &States::preStateRemoved, this, [=](int index) {
+//                beginRemoveRows(QModelIndex(), index, index);
+//            });
+//            connect(mStates, &States::postStateRemoved, this, [=]() {
+//                endRemoveRows();
+//            });
+//        }
 
         endResetModel();
 }

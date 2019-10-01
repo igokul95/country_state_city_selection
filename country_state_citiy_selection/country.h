@@ -16,7 +16,7 @@ class Countries : public QObject
     Q_OBJECT
 public:
     explicit Countries(QObject *parent = nullptr);
-    QVector<CountryItem> items() const;
+    QVector<CountryItem*> items() const;
 
     Q_INVOKABLE States* getStatesAt(int index);
 
@@ -24,7 +24,7 @@ signals:
 
 public slots:
 private:
-    QVector<CountryItem> _countries;
+    QVector<CountryItem*> _countries;
 };
 
 #endif // COUNTRY_H
