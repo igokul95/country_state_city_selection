@@ -5,7 +5,7 @@ States::States(QObject *parent) : QObject(parent)
 
 }
 
-QVector<StateItem*> States::items() const
+QList<StateItem*> States::items() const
 {
     return _states;
 }
@@ -24,7 +24,7 @@ bool States::setStateAt(int index, StateItem *state)
 
 }
 
-bool States::setStates(QVector<StateItem*> states)
+bool States::setStates(QList<StateItem*> states)
 {
     _states = states;
     return true;

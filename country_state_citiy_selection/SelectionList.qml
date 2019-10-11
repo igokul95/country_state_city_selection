@@ -4,95 +4,165 @@ import QtQuick.Layouts 1.3
 
 import Country 1.0
 import State 1.0
+import City 1.0
 
 ColumnLayout {
-    Frame {
-        Layout.fillWidth: true
+    height: parent.height - 200
+    RowLayout {
+        width: parent.width
+        height: parent.height
+        Frame {
+            Layout.fillWidth: true
+            height: parent.height
 
-        ListView {
-            id: listview
-            implicitWidth: 250
-            implicitHeight: 200
-            anchors.fill: parent
-            clip: true
-            Component.onCompleted: function() {
-                                       console.log('model', countries.getStatesAt(0))
-                                   }
-            model: CountryModel {
-                countries: countries
-            }
-            delegate:
-                Item {
-                  id: element1
-                  property variant myData: model
-                  width: parent.width
-                  height: 50
-
-                RowLayout {
-                width: parent.width
-                Component.onCompleted: function() {
-                    console.log("inside delegate list 1", model.name);
+            ListView {
+                onCurrentIndexChanged: {
+                    countries.activeCountry = currentIndex
+                    stateModel.states = countries.statesOfActiveCountry
+                    cityModel.cities = countries.citiesOfActiveCountry
                 }
 
+                id: listview
+                implicitWidth: 200
+                implicitHeight: parent.height
+                anchors.fill: parent
+                clip: true
 
-                CheckBox {
-                    checked: true
-                    onClicked: {
-                        console.log("index", storageHelper.getDisksof(index), listview.currentItem )
-                        model.done = checked
+                model: CountryModel {
+                    countries: countries
+                }
+                header: Text {
+                    id: name
+                    text: qsTr("Countries")
+                    font.bold: true
+                }
 
-//                        diskList.appendDisk();
+                delegate:
+                    Item {
+                    id: countryDelegate
+                    width: parent.width
+                    height: 50
+                    RowLayout {
+                        width: parent.width
+                        TextField {
+                            text: model.name
+                            width: parent.width
+                            height: parent.height
+                            Layout.fillWidth: true
+                            background: Rectangle {
+                                width: parent.width
+                                height: parent.height
+                                color: listview.currentIndex === index ? "#70baff" : "#ffffff"
+                            }
+                        }
+                    }
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        onClicked: {
+                            listview.currentIndex = index
+
+                        }
                     }
                 }
-                TextField {
-                    text: name
-                    onEditingFinished: model.description = text
-                    Layout.fillWidth: true
-                }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {listview.currentIndex = index
 
-                    console.log("mouse clicked", listview.currentItem.myData.name, listview.currentIndex)}
-                }
             }
         }
+        Frame {
+            Layout.fillWidth: true
 
-}
-    Frame {
-        Layout.fillWidth: true
-
-        ListView {
-            id: secondList
-            implicitWidth: 250
-            implicitHeight: 100
-            anchors.fill: parent
-            clip: true
-//            Component.onCompleted: {
-//                secondList.model = testingList.getDisksAt(0)
-//            }
-
-            model: StateModel {
-                states: countries.getStatesAt(listview.currentIndex)
-            }
-
-            delegate: RowLayout {
-                width: parent.width
-                Component.onCompleted: function() {
-                    console.log("inside delegate", model.stateName);
+            ListView {
+                id: stateList
+                implicitWidth: 200
+                implicitHeight: 200
+                anchors.fill: parent
+                clip: true
+                header: Text {
+                    id: stateTitle
+                    text: qsTr("States")
+                    font.bold: true
                 }
-                CheckBox {
-                    checked: true
-//                    onClicked: model.done = checked
+                model: StateModel {
+                    id: stateModel
+                    states: countries.statesOfActiveCountry
                 }
-                TextField {
-                    text: stateName
-//                    onEditingFinished: model.description = text
-                    Layout.fillWidth: true
+                delegate:
+                    Item {
+                    id: stateDelegate
+                    width: parent.width
+                    height: 50
+                    RowLayout {
+                        width: parent.width
+                        TextField {
+                            text: stateName
+                            width: parent.width
+                            height: parent.height
+                            Layout.fillWidth: true
+                            background: Rectangle {
+                                width: parent.width
+                                height: parent.height
+                                color: stateList.currentIndex === index ? "#70baff" : "#ffffff"
+                            }
+                        }
+                    }
+                    MouseArea {
+                        id: mouseAreaState
+                        anchors.fill: parent
+                        onClicked: {
+                            stateList.currentIndex = index
+                        }
+                    }
                 }
+
             }
         }
+        Frame {
+            Layout.fillWidth: true
 
+            ListView {
+                id: cityList
+                implicitWidth: 200
+                implicitHeight: 200
+                anchors.fill: parent
+                clip: true
+                header: Text {
+                    id: cityTitle
+                    text: qsTr("Cities")
+                    font.bold: true
+                }
+                model: CityModel {
+                    id: cityModel
+                    cities: countries.citiesOfActiveCountry
+                }
+                delegate:
+                    Item {
+                    id: cityDelegate
+                    width: parent.width
+                    height: 50
+                    RowLayout {
+                        width: parent.width
+                        TextField {
+                            text: model.cityName
+                            width: parent.width
+                            height: parent.height
+                            Layout.fillWidth: true
+                            background: Rectangle {
+                                width: parent.width
+                                height: parent.height
+                                color: cityList.currentIndex === index ? "#70baff" : "#ffffff"
+                            }
+                        }
+                    }
+                    MouseArea {
+                        id: mouseAreacity
+                        anchors.fill: parent
+                        onClicked: {
+                            cityList.currentIndex = index
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }

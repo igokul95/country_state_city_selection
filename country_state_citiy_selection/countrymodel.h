@@ -7,7 +7,7 @@ class Countries;
 class CountryModel: public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(Countries *countries READ countries WRITE setcountries);
+    Q_PROPERTY(Countries *countries READ countries WRITE setcountries)
 public:
     explicit CountryModel(QObject *parent = nullptr);
     enum {

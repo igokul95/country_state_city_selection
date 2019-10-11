@@ -5,7 +5,8 @@
 StateModel::StateModel(QObject *parent)
     : QAbstractListModel(parent), mStates(nullptr)
 {
-
+    States *state = new States();
+    mStates = state;
 }
 
 int StateModel::rowCount(const QModelIndex &parent) const

@@ -3,7 +3,7 @@ import QtQuick.Window 2.12
 
 Window {
     visible: true
-    width: 640
+    width: 700
     height: 480
     title: qsTr("Hello World")
     SelectionList {

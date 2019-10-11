@@ -5,26 +5,39 @@
 #include <QVector>
 
 #include "state.h"
+#include "city.h"
 
 struct CountryItem {
     QString name;
     States* states;
+    City* cities;
 };
 
 class Countries : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int activeCountry READ activeCountry WRITE activeCountry)
+    Q_PROPERTY(States* statesOfActiveCountry READ statesOfActiveCountry)
+    Q_PROPERTY(City* citiesOfActiveCountry READ citiesOfActiveCountry)
+
 public:
     explicit Countries(QObject *parent = nullptr);
-    QVector<CountryItem*> items() const;
+    QList<CountryItem*> items() const;
 
-    Q_INVOKABLE States* getStatesAt(int index);
+    int activeCountry() const;
+    void activeCountry(int currentCountry);
+
+    States* statesOfActiveCountry() const;
+    City* citiesOfActiveCountry() const;
+
 
 signals:
 
 public slots:
+
 private:
-    QVector<CountryItem*> _countries;
+    QList<CountryItem*> _countries;
+    int _activeCountry;
 };
 
 #endif // COUNTRY_H

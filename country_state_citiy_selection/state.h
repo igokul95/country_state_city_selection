@@ -14,10 +14,10 @@ class States : public QObject
     Q_OBJECT
 public:
     explicit States(QObject *parent = nullptr);
-    QVector<StateItem*> items() const;
+    QList<StateItem*> items() const;
 
     bool setStateAt(int index, StateItem *state);
-    bool setStates(QVector<StateItem*> states);
+    bool setStates(QList<StateItem*> states);
 
 signals:
     void preStateAppended();
@@ -30,7 +30,7 @@ public slots:
     void appendState(StateItem *state);
 
 private:
-    QVector<StateItem*> _states;
+    QList<StateItem*> _states;
 };
 
 #endif // STATE_H

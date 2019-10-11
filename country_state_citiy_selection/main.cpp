@@ -5,8 +5,10 @@
 
 #include "state.h"
 #include "country.h"
+#include "city.h"
 #include "statemodel.h"
 #include "countrymodel.h"
+#include "citymodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,12 +17,16 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     qmlRegisterType<CountryModel>("Country", 1, 0, "CountryModel");
     qmlRegisterType<StateModel>("State", 1, 0, "StateModel");
+    qmlRegisterType<CityModel>("City", 1, 0, "CityModel");
 
     qmlRegisterUncreatableType<Countries>("Country", 1, 0, "Countries",
         QStringLiteral("Countries should not be created in QML"));
 
     qmlRegisterUncreatableType<States>("State", 1, 0, "States",
         QStringLiteral("States should not be created in QML"));
+
+    qmlRegisterUncreatableType<City>("City", 1, 0, "City",
+        QStringLiteral("Cities should not be created in QML"));
 
     Countries countries;
 
